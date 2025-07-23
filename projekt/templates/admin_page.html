@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Student List</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .student-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .student-table th, .student-table td { padding: 8px 10px; border: 1px solid #444; text-align: left; }
+        .student-table th { background: #b71c1c; color: #fff; }
+        .student-table tr:nth-child(even) { background: #23272b; color: #fff; }
+        .student-table tr:nth-child(odd) { background: #2c2f33; color: #fff; }
+        .student-photo-thumb { width: 50px; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid #b71c1c; }
+        .action-btn { padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .edit-btn { background: #1976d2; color: #fff; }
+        .delete-btn { background: #b71c1c; color: #fff; }
+        .search-bar { margin-bottom: 20px; }
+        .logout-link { float: right; color: #b71c1c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="main-form-container">
+        <div style="width:100%;max-width:1200px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <h2 style="color:#43a047;text-align:center;">Lista e Studentëve</h2>
+                <a href="/register" class="save-btn" style="width:auto;padding:12px 28px;font-size:1.1em;">Regjistro një student</a>
+            </div>
+            <a href="/admin/logout" class="logout-link">Dil</a>
+            <form method="post" class="search-bar">
+                <input type="text" name="search" placeholder="Kërko me emër, mbiemër, nr. regjistrimit..." value="{{ search_query }}">
+                <button type="submit" class="save-btn" style="width:auto;padding:7px 18px;">Kërko</button>
+            </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="error" style="color:#b71c1c;">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <table class="student-table">
+                <tr>
+                    <th>Photo</th>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Class</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>University</th>
+                    <th>Birth Place</th>
+                    <th>Address</th>
+                    <th>Parent Name</th>
+                    <th>Parent Details</th>
+                    <th>Actions</th>
+                </tr>
+                {% for s in students %}
+                <tr>
+                    <td><img src="/uploads/{{ s[12] }}" class="student-photo-thumb" onerror="this.src='/static/default-photo.png'"/></td>
+                    <td>{{ s[1] }}</td>
+                    <td>{{ s[2] }}</td>
+                    <td>{{ s[3] }}</td>
+                    <td>{{ s[4] }}</td>
+                    <td>{{ s[5] }}</td>
+                    <td>{{ s[6] }}</td>
+                    <td>{{ s[7] }}</td>
+                    <td>{{ s[8] }}</td>
+                    <td>{{ s[9] }}</td>
+                    <td>{{ s[10] }}</td>
+                    <td>{{ s[11] }}</td>
+                    <td>
+                        <a href="/admin/edit/{{ s[0] }}" class="action-btn edit-btn">Edit</a>
+                        <form method="post" action="/admin/delete/{{ s[0] }}" style="display:inline;">
+                            <button type="submit" class="action-btn delete-btn" onclick="return confirm('Delete this student?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html> 

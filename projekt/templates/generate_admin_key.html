@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Admin Key</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="main-form-container">
+        <form method="post" class="main-form" style="min-width:350px;max-width:400px;">
+            <h2 style="color:#43a047;text-align:center;">Generate Admin Key</h2>
+            {% if new_key %}
+                <div class="form-group">
+                    <label>New Admin Key:</label>
+                    <input type="text" value="{{ new_key }}" readonly style="font-weight:bold;color:#43a047;text-align:center;">
+                </div>
+            {% endif %}
+            <button type="submit" class="save-btn">Generate Key</button>
+            <a href="/masteradmin/logout" class="exit-btn" style="display:block;text-align:center;margin-top:10px;">Logout</a>
+        </form>
+    </div>
+</body>
+</html> 

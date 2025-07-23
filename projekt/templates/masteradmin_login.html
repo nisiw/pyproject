@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Master Admin Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="main-form-container">
+        <form method="post" class="main-form" style="min-width:350px;max-width:400px;">
+            <h2 style="color:#43a047;text-align:center;">Master Admin Login</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="error" style="color:#43a047;">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button type="submit" class="save-btn">Login</button>
+        </form>
+    </div>
+</body>
+</html> 

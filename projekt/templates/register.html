@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <title>UP regjistrimi i studentëve 2025/2026</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="header-bar">
+        <div class="header-left">
+            <img src="/static/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+        </div>
+        <div class="header-center">
+            <h2>UP regjistrimi i studentëve 2025/2026</h2>
+        </div>
+        <div class="header-right">
+            <form class="search-form">
+                <input type="text" placeholder="Kërko...">
+                <button type="button" class="search-btn">🔍</button>
+            </form>
+        </div>
+    </div>
+    <div class="main-form-container">
+        <form method="post" enctype="multipart/form-data" class="main-form horizontal">
+            <div class="form-row top-row" style="flex-direction: column; align-items: stretch; gap: 0;">
+                <div class="form-group" style="flex:1; margin-bottom: 10px;">
+                    <label for="registration_no">Nr. i regjistrimit:</label>
+                    <input type="number" name="registration_no" id="registration_no" value="{{ registration_no or '' }}">
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label for="date">Data:</label>
+                    <input type="date" name="date" id="date" value="{{ date or '' }}" required>
+                </div>
+            </div>
+            <div class="form-section student-details">
+                <h3>Detajet e studentit</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Emri:</label>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Mbiemri:</label>
+                        <input type="text" name="surname" id="surname" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="drejtimi">Drejtimi:</label>
+                        <select name="drejtimi" id="drejtimi" required onchange="updateDegaOptions()">
+                            <option value="">Zgjedh Drejtimin</option>
+                            <option value="Fakulteti Filozofik">Fakulteti Filozofik</option>
+                            <option value="Fakulteti i Filologjisë">Fakulteti i Filologjisë</option>
+                            <option value="Fakulteti Juridik">Fakulteti Juridik</option>
+                            <option value="Fakulteti Ekonomik">Fakulteti Ekonomik</option>
+                            <option value="Fakulteti i Edukimit">Fakulteti i Edukimit</option>
+                            <option value="Fakulteti i Shkencave Matematike-Natyrore">Fakulteti i Shkencave Matematike-Natyrore</option>
+                            <option value="Fakulteti i Inxhinierisë Elektrike dhe Kompjuterike (FIEK)">Fakulteti i Inxhinierisë Elektrike dhe Kompjuterike (FIEK)</option>
+                            <option value="Fakulteti i Inxhinierisë Mekanike">Fakulteti i Inxhinierisë Mekanike</option>
+                            <option value="Fakulteti i Ndërtimtarisë dhe Arkitekturës">Fakulteti i Ndërtimtarisë dhe Arkitekturës</option>
+                            <option value="Fakulteti i Inxhinierisë së Burimeve Gjeologjike dhe Energjetike">Fakulteti i Inxhinierisë së Burimeve Gjeologjike dhe Energjetike</option>
+                            <option value="Fakulteti i Mjekësisë">Fakulteti i Mjekësisë</option>
+                            <option value="Fakulteti i Bujqësisë dhe Veterinarisë">Fakulteti i Bujqësisë dhe Veterinarisë</option>
+                            <option value="Fakulteti i Arteve">Fakulteti i Arteve</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dega">Dega:</label>
+                        <select name="dega" id="dega" required>
+                            <option value="">Zgjedh Degen</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="class">Klasa:</label>
+                        <select name="class" id="class" required>
+                            <option value="">Zgjedh Klasën</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dob">Data e lindjes:</label>
+                        <input type="date" name="dob" id="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="religion">Feja:</label>
+                        <input type="text" name="religion" id="religion">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Gjinia:</label>
+                        <label><input type="radio" name="gender" value="Mashkull" required> Mashkull</label>
+                        <label><input type="radio" name="gender" value="Femër"> Femër</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Aftësitë:</label>
+                        <input type="text" name="skills" id="skills">
+                    </div>
+                </div>
+            </div>
+            <div class="form-section parent-details">
+                <h3>Detajet e prindërve</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="father_name">Emri i babait:</label>
+                        <input type="text" name="father_name" id="father_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="mother_name">Emri i nënës:</label>
+                        <input type="text" name="mother_name" id="mother_name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="father_occupation">Profesioni i babait:</label>
+                        <input type="text" name="father_occupation" id="father_occupation">
+                    </div>
+                    <div class="form-group">
+                        <label for="mother_occupation">Profesioni i nënës:</label>
+                        <input type="text" name="mother_occupation" id="mother_occupation">
+                    </div>
+                </div>
+            </div>
+            <div class="form-side">
+                <div class="photo-upload">
+                    <img src="/static/default-photo.png" alt="Foto e studentit" class="student-photo" id="photoPreview">
+                    <input type="file" name="photo" id="photo" accept="image/*" required onchange="previewPhoto(event)">
+                    <button type="button" class="upload-btn">Ngarko</button>
+                </div>
+                <button type="submit" class="save-btn">Regjistro</button>
+                <button type="reset" class="reset-btn">Rivendos</button>
+                <button type="button" class="exit-btn" onclick="window.location.href='/'">Dil</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function previewPhoto(event) {
+            const input = event.target;
+            const preview = document.getElementById('photoPreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+const degaOptions = {
+    "Fakulteti Filozofik": [
+        "Psikologji", "Sociologji", "Filozofi", "Pedagogji"
+    ],
+    "Fakulteti i Filologjisë": [
+        "Gjuhë dhe Letërsi Shqipe", "Gjuhë Angleze", "Gjuhë Gjermane", "Gjuhë Frënge", "Gjuhë Turke"
+    ],
+    "Fakulteti Juridik": [
+        "Jurisprudencë", "Shkenca Politike"
+    ],
+    "Fakulteti Ekonomik": [
+        "Menaxhment", "Kontabilitet", "Ekonomi e Përgjithshme", "Marketing"
+    ],
+    "Fakulteti i Edukimit": [
+        "Mësuesi", "Edukim Parashkollor", "Edukim Fillor"
+    ],
+    "Fakulteti i Shkencave Matematike-Natyrore": [
+        "Matematikë", "Fizikë", "Kimi", "Biologji", "Informatikë"
+    ],
+    "Fakulteti i Inxhinierisë Elektrike dhe Kompjuterike (FIEK)": [
+        "Inxhinieri Kompjuterike", "Inxhinieri Elektrike", "Telekomunikacion"
+    ],
+    "Fakulteti i Inxhinierisë Mekanike": [
+        "Inxhinieri Mekanike", "Automjete"
+    ],
+    "Fakulteti i Ndërtimtarisë dhe Arkitekturës": [
+        "Inxhinieri Ndërtimi", "Arkitekturë"
+    ],
+    "Fakulteti i Inxhinierisë së Burimeve Gjeologjike dhe Energjetike": [
+        "Inxhinieri Gjeologjike", "Inxhinieri Energjetike"
+    ],
+    "Fakulteti i Mjekësisë": [
+        "Mjekësi e Përgjithshme", "Farmaci", "Stomatologji", "Infermieri"
+    ],
+    "Fakulteti i Bujqësisë dhe Veterinarisë": [
+        "Bujqësi", "Veterinari"
+    ],
+    "Fakulteti i Arteve": [
+        "Pikturë", "Muzikë", "Akte"
+    ]
+};
+function updateDegaOptions() {
+    const drejtimi = document.getElementById('drejtimi').value;
+    const dega = document.getElementById('dega');
+    dega.innerHTML = '<option value="">Zgjedh Degen</option>';
+    if (degaOptions[drejtimi]) {
+        degaOptions[drejtimi].forEach(function(opt) {
+            const option = document.createElement('option');
+            option.value = opt;
+            option.textContent = opt;
+            dega.appendChild(option);
+        });
+    }
+}
+    </script>
+</body>
+</html>
